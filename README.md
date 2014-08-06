@@ -6,7 +6,7 @@ Using Spark with Kryo serialisation and a custom Kryo registrator (to register c
     java.lang.ClassNotFoundException
     java.lang.IndexOutOfBoundsException
 
-I've currently only verified this problem in Spark 1.0.0.  My current hypothesis is described below.
+I've verified this problem in Spark 1.0.0 and Spark 1.0.2.  My current hypothesis is described below.
 
 To build this repository and demonstrate the problem, run:
 
