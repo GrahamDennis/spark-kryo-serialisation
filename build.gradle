@@ -1,0 +1,30 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+version '0.0.1'
+group 'org.example.spark-kryo-serialisation'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.0.2'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.apache.spark:spark-core_2.10:1.0.0')
+}
+
+shadowJar {
+    classifier = 'shadow'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.SF'
+    exclude '**/*.java'
+    exclude '**/*.cs'
+}
