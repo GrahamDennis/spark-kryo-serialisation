@@ -31,14 +31,16 @@ object SparkDriver {
 
     val numElements = 1000
 
-    val rdd = sc.parallelize((0 until numElements).map((_, new MyCustomClass)), 10)
-              .cache()
+    // We cache this RDD to make sure the values are actually transported and not recomputed.
+    val cachedRDD = sc.parallelize((0 until numElements).map((_, new MyCustomClass)), 10)
+                    .cache()
 
-    val rdd3 = rdd.map({ case (index, customObject) => ((new Random).nextInt(), customObject)})
+    // Randomly mix the keys so that the join below will require a shuffle with each partition sending data to
+    // many other partitions.
+    val randomisedRDD = cachedRDD.map({ case (index, customObject) => ((new Random).nextInt(), customObject)})
 
-    val rdd4 = rdd3.join(rdd)
-
-    val localResults = rdd4.collect()
+    // Join the two RDDs, and force evaluation.
+    val localResults = randomisedRDD.join(cachedRDD).collect()
   }
 
 }
