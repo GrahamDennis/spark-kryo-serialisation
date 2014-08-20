@@ -1,5 +1,7 @@
 # Spark Kryo Serialisation bug
 
+## The fix for this issue will be included in Spark 1.0.3 and Spark 1.1
+
 Using Spark with Kryo serialisation and a custom Kryo registrator (to register custom classes with Kryo) can cause problems in Spark.  These problems appear as a failure during Kryo deserialisation and I have variously seen the following failures:
 
     java.lang.ClassCastException: scala.Tuple1 cannot be cast to scala.Product2
